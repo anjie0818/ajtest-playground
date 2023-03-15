@@ -9,6 +9,7 @@ import com.cdancy.jenkins.rest.domain.job.BuildInfo;
 import com.cdancy.jenkins.rest.domain.job.JobInfo;
 import com.cdancy.jenkins.rest.domain.queue.QueueItem;
 import com.cdancy.jenkins.rest.domain.system.SystemInfo;
+import com.cdancy.jenkins.rest.features.JobsApi;
 import org.playground.ajtest.entity.AjTestJobHistory;
 import org.springframework.core.io.ClassPathResource;
 
@@ -103,6 +104,7 @@ public class JenkinsUtil {
                 .endPoint(jenkinsUrl) // Optional. Defaults to http://127.0.0.1:8080
                 .credentials(jenkinsUserName+":"+jenkinsToken) // Optional.
                 .build();
+
         // Get the build info of the queue item being built and poll until it is done
         BuildInfo buildInfo = client.api().jobsApi().buildInfo(null, jobName, Integer.parseInt(ajTestJobHistory.getJenkinsBuildNum()));
         while (buildInfo.result() == null) {
@@ -116,6 +118,7 @@ public class JenkinsUtil {
         }
         ajTestJobHistory.setExecuteStatus(buildInfo.result());
         ajTestJobHistory.setSpendTime(String.valueOf(buildInfo.duration()));
+        ajTestJobHistory.setJenkinsBuildReportUrl(buildInfo.url());
     }
     public static void main(String[] args) throws IOException, InterruptedException {
         JenkinsClient client = JenkinsClient.builder()

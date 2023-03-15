@@ -1,7 +1,10 @@
 todo
 * allure测试项目
 
-
+* jenkins插件
+* TestNG Results
+* HTML Publisher
+* junit原生报告
 
 # playground 新手体验项目
 [diboot 基础介绍 看这里](https://gitee.com/dibo_software/diboot)
